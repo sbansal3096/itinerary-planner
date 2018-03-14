@@ -1,0 +1,33 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+	<meta charset="UTF-8"> 
+	<title>
+		rajasthan
+	</title>
+	    <!-- <link rel="stylesheet" href="../static/css/styling.css"> -->
+</head>
+
+<body>
+
+        <script
+                src="https://code.jquery.com/jquery-3.3.0.js"
+                integrity="sha256-TFWSuDJt6kS+huV+vVlyV1jM3dwGdeNWqezhTxXB/X8="
+                crossorigin="anonymous">
+        </script>
+ <script type=text/javascript>
+    $(function() {
+        $('#but1').bind('click', function() {
+            $.getJSON('/background', {
+                data: '2'
+            }, function(data) {
+            });
+        });
+    });
+</script>
+
+	<h1>hello</h1>
+ 	<button type="button" id="but1"> press </button>
+
+</body>
+</html>
