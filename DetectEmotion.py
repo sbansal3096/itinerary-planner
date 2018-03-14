@@ -32,7 +32,7 @@ def detect_face(frame):
                 scaleFactor=1.1,
                 minNeighbors=6,
                 minSize=(48, 48),
-                flags=cv2.cv.CV_HAAR_FEATURE_MAX
+                flags=cv2.CASCADE_SCALE_IMAGE
             )
         return gray, detected_faces
 
@@ -73,20 +73,20 @@ while True:
                 cv2.putText(frame, "Happy!!",(x,y), cv2.FONT_ITALIC, 2, 155, 10)
             elif prediction_result == 0:
                 cv2.putText(frame, "Angry",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-	    elif prediction_result == 1:
+        elif prediction_result == 1:
                 cv2.putText(frame, "Disgust",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-	    elif prediction_result == 2:
+        elif prediction_result == 2:
                 cv2.putText(frame, "Fear",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-	    elif prediction_result == 4:
+        elif prediction_result == 4:
                 cv2.putText(frame, "Sad",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-	    elif prediction_result == 5:
+        elif prediction_result == 5:
                 cv2.putText(frame, "Surprise",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
- 	    else :
+        else :
                 cv2.putText(frame, "Neutral",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
             
 
             # increment counter
-            face_index += 1
+        face_index += 1
                 
 
     # Display the resulting frame
