@@ -4,89 +4,19 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Waypoints in directions</title>
-    <style>
-      #right-panel {
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-
-      #right-panel select, #right-panel input {
-        font-size: 15px;
-      }
-
-      #right-panel select {
-        width: 100%;
-      }
-
-      #right-panel i {
-        font-size: 12px;
-      }
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-        float: left;
-        width: 70%;
-        height: 100%;
-      }
-      #right-panel {
-        margin: 20px;
-        border-width: 2px;
-        width: 20%;
-        height: 400px;
-        float: left;
-        text-align: left;
-        padding-top: 0;
-      }
-      #directions-panel {
-        margin-top: 10px;
-        background-color: #FFEE77;
-        padding: 10px;
-        overflow: scroll;
-        height: 174px;
-      }
-    </style>
+    <link rel="stylesheet" href="../static/css/styling.css">
   </head>
   <body>
-    <div id="map"></div>
     <div id="right-panel">
-    <div>
-    <b>Start:</b>
-    <select id="start">
-      <option value="Jaipur, Rajasthan">Jaipur</option>
-      <option value="Jaisalmer, Rajasthan">Jaisalmer</option>
-
-    </select>
-    <br>
-    <b>Waypoints:</b> <br>
-    <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br>
-    <select multiple id="waypoints">
-      <option value="Jaisalmer, Rajasthan">Jaisalmer</option>
-      <option value="Ajmer, Rajasthan">Ajmer</option>
-      <option value="Udaipur, Rajasthan">Udaipur</option>
-      
-      <option value="Jodhpur, Rajasthan">Jodhpur</option>
-    </select>
-    <br>
-    <b>End:</b>
-    <select id="end">
-      <option value="Udaipur, Rajasthan">Udaipur</option>
-      <option value="Jaisalmer, Rajasthan">Jaisalmer</option>
-      <option value="Ajmer, Rajasthan">Ajmer</option>
-      
-    </select>
-    <br>
-      <input type="submit" id="submit">
+      <ul id="list"></ul>
     </div>
-    <div id="directions-panel"></div>
-    </div>
-    <script type=text/javascript>
+    <div id="map"></div>
+    <script
+          src="https://code.jquery.com/jquery-3.3.0.js"
+          integrity="sha256-TFWSuDJt6kS+huV+vVlyV1jM3dwGdeNWqezhTxXB/X8="
+          crossorigin="anonymous">
     </script>
-    <script>
+    <script type=text/javascript>
 
       var fixed={{fixedpts|safe}};
       var waypts1={{waypts|safe}};
@@ -100,26 +30,21 @@
         });
         directionsDisplay.setMap(map);
         calculateAndDisplayRoute(directionsService, directionsDisplay);
-        document.getElementById('submit').addEventListener('click', function() {
-          calculateAndDisplayRoute(directionsService, directionsDisplay);
-        });
       }
 
       function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         var waypts = [];
-        //var checkboxArray = document.getElementById('waypoints');
         for (var i = 0; i < waypts1.length; i++) {
-          //if (checkboxArray.options[i].selected) {
             waypts.push({
-              location: waypts1[i],//checkboxArray[i].value,
+              location: waypts1[i],
               stopover: true
             });
           //}
         }
 
         directionsService.route({
-          origin: fixed[0],//document.getElementById('start').value,
-          destination: fixed[1],//document.getElementById('end').value,
+          origin: fixed[0],
+          destination: fixed[1],
           waypoints: waypts,
           optimizeWaypoints: true,
           travelMode: 'DRIVING'
@@ -127,16 +52,10 @@
           if (status === 'OK') {
             directionsDisplay.setDirections(response);
             var route = response.routes[0];
-            var summaryPanel = document.getElementById('directions-panel');
-            summaryPanel.innerHTML = '';
-            // For each route, display summary information.
             for (var i = 0; i < route.legs.length; i++) {
               var routeSegment = i + 1;
-              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                  '</b><br>';
-              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+              $('#list').append( '<li><b>Route Segment: ' + routeSegment + '</b><br>'+route.legs[i].start_address + ' to ' + route.legs[i].end_address + '<br>'    +route.legs[i].distance.text + '<br><br></li>' );
+                  
             }
           } else {
             window.alert('Directions request failed due to ' + status);
