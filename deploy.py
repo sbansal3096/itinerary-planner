@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 from threading import Thread
-app = Flask(__name__)
+from DetectEmotion import func
+from graph import grph
 
-val='1'
+app = Flask(__name__)
 
 @app.route('/',methods=['POST','GET'])
 def main():
@@ -16,14 +17,18 @@ def a():
         print (data)
         return jsonify({})
 
-def flaskThread(a):
-    global val
-    for i in range(1,5):
-        val='2';
-        print(a)
+@app.route('/plan',methods=['GET','POST'])
+def b():
+    if request.method=='GET':
+        res=grph([0,1])
+        return render_template("dir.html",fixedpts=res['fixedpts'],waypts=res['waypts'])
+
+def flaskThread():
+    func()
+
 
 
 if __name__ == '__main__':
-   thread1=Thread(target=flaskThread,args=(val))
+   thread1=Thread(target=flaskThread,args=())
    thread1.start()
    app.run(debug=False)
