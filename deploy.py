@@ -22,6 +22,13 @@ def a():
 @app.route('/plan',methods=['GET','POST'])
 def b():
     if request.method=='GET':
+        data=request.args.get('data')
+        print(data)
+        res=grph([0,1,2,3,4])
+        return render_template("dir.html",fixedpts=res['fixedpts'],waypts=res['waypts'])
+    else:
+        data=request.get_json()
+        print(data['val'])
         res=grph([0,1,2,3,4])
         return render_template("dir.html",fixedpts=res['fixedpts'],waypts=res['waypts'])
 

@@ -17,16 +17,15 @@
 
 	<!-- <h1>hello</h1> -->
  	<!-- <button type="button" id="but1"> press </button> -->
-	<!doctype html>
-	<html>
-	<head>
+<!doctype html>
+<html>
+<head>
 
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="../static/css/styling.css">
 
 	<script
@@ -110,6 +109,28 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 	</head>
 	<body>
+        <script type=text/javascript>
+            $(function() {
+                $('#plan').bind('click', function() {
+                    $.getJSON('/plan', {
+                        data: '2'
+                        }, function(data) {
+                    });
+
+                     $.ajax({
+                        type : "POST",
+                        url : '/plan',
+                        data: JSON.stringify({'val':3}),
+                        contentType: 'application/json;charset=UTF-8',
+                        success: function(result) {
+                            console.log(result);
+                        }
+                    });
+                    //window.location="https://localhost:5000/plan"
+
+                });
+            });
+        </script>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
 			<a class="navbar-brand" href="#">Rajasthan</a>
 
@@ -131,7 +152,7 @@
 				 <a class="dropdown-item" href="#TestScores">Test Scores</a>
 				 <a class="dropdown-item" href="#Skills">Skills</a>
 			 </div> -->
-		 </li>
+		          </li>
 
 					<li class="nav-item">
 						<a class="nav-link" href="#TechnicalProjects">Places</a>
@@ -142,11 +163,10 @@
 								</ul>
 				 <ul class="navbar-nav navbar-right">
 					 <li class="nav-item">
-						 <a class="btn btn-dark" href="resume.html" role="button">Plan Itenary</a>
+						 <a class="btn btn-dark" id="plan" href="/plan" role="button">Plan Itinerary</a>
 					 </li>
 				 </ul>
 			</div>
-
 		</nav>
 
 	<div id="wrapper">

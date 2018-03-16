@@ -10,6 +10,7 @@
     <div id="right-panel">
       <ul id="list"></ul>
     </div>
+
     <div id="map"></div>
     <script
           src="https://code.jquery.com/jquery-3.3.0.js"
@@ -52,10 +53,13 @@
           if (status === 'OK') {
             directionsDisplay.setDirections(response);
             var route = response.routes[0];
+            $('#list').append( '<li ><div class="place">'+route.legs[0].start_address+'</div></li>' );
+
             for (var i = 0; i < route.legs.length; i++) {
-              var routeSegment = i + 1;
-              $('#list').append( '<li><b>Route Segment: ' + routeSegment + '</b><br>'+route.legs[i].start_address + ' to ' + route.legs[i].end_address + '<br>'    +route.legs[i].distance.text + '<br><br></li>' );
+              $('#list').append( '<li>'+ 'Drive to ' + route.legs[i].end_address + ' :'    +route.legs[i].distance.text + '</li>' );
                   
+              $('#list').append( '<li><div class="place">'+route.legs[i].end_address+'</div></li>' );
+
             }
           } else {
             window.alert('Directions request failed due to ' + status);
