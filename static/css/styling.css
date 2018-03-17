@@ -28,7 +28,10 @@ height: 100%;
 margin: 0;
 padding: 0;
 }
-
+.place{
+	
+	font-size: 30px;
+}
 #map {
 width: 68%;
 height: 100%;

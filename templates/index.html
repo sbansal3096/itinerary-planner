@@ -17,16 +17,15 @@
 
 	<!-- <h1>hello</h1> -->
  	<!-- <button type="button" id="but1"> press </button> -->
-	<!doctype html>
-	<html>
-	<head>
+<!doctype html>
+<html>
+<head>
 
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="../static/css/styling.css">
 
 	<script
@@ -89,11 +88,49 @@
 	.box5{
 		background-color: #ff0077;
 	}
-
+	#fixedbutton {
+		width:20px;
+		height:20px;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+}
+#icon{
+    text-shadow: 1px 1px 1px #ccc;
+    font-size: 2em;
+}
+.iconclass{
+	border: 2px solid black;
+ border-radius: 50%;
+ height:40px;
+ width:40px;
+}
 	</style>
 	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 	</head>
 	<body>
+        <script type=text/javascript>
+            $(function() {
+                $('#plan').bind('click', function() {
+                    $.getJSON('/plan', {
+                        data: '2'
+                        }, function(data) {
+                    });
+
+                     $.ajax({
+                        type : "POST",
+                        url : '/plan',
+                        data: JSON.stringify({'val':3}),
+                        contentType: 'application/json;charset=UTF-8',
+                        success: function(result) {
+                            console.log(result);
+                        }
+                    });
+                    //window.location="https://localhost:5000/plan"
+
+                });
+            });
+        </script>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
 			<a class="navbar-brand" href="#">Rajasthan</a>
 
@@ -115,7 +152,7 @@
 				 <a class="dropdown-item" href="#TestScores">Test Scores</a>
 				 <a class="dropdown-item" href="#Skills">Skills</a>
 			 </div> -->
-		 </li>
+		          </li>
 
 					<li class="nav-item">
 						<a class="nav-link" href="#TechnicalProjects">Places</a>
@@ -126,11 +163,10 @@
 								</ul>
 				 <ul class="navbar-nav navbar-right">
 					 <li class="nav-item">
-						 <a class="btn btn-dark" href="resume.html" role="button">Plan Itenary</a>
+						 <a class="btn btn-dark" id="plan" href="/plan" role="button">Plan Itinerary</a>
 					 </li>
 				 </ul>
 			</div>
-
 		</nav>
 
 	<div id="wrapper">
@@ -470,6 +506,32 @@
 <!--Udaipur End -->
 
 	</div>
+
+	<div class ="iconclass"><a data-toggle="modal" data-target="#myModal" id="fixedbutton"><i class="fas fa-comment-alt" id="icon"></i></a></div>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Quick Enquiry</h4>
+            </div>
+            <div class="modal-body">
+              <iframe
+                width="400"
+                height="430"
+                src="https://console.dialogflow.com/api-client/demo/embedded/ca60b45e-d175-4e5d-a3e5-7a8cea91c4c9">
+              </iframe>
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
 	<script>
 	$(document).ready(function(){
 		$('#wrapper').fullpage();
