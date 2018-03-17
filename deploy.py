@@ -35,6 +35,28 @@ def b():
 def flaskThread():
     func()
 
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    req = request.get_json(silent=True, force=True)
+
+
+    if(req.get("result").get("action")=="ask_time"):
+
+        param=req.get("result").get("parameters")
+        #budget
+        print(param['unit-currency']['amount'])
+    elif(req.get("result").get("action")=="thank"):
+        param=req.get("result").get("parameters")
+        #time
+        print(param['duration']['amount'])
+    res = {}
+
+    res = json.dumps(res, indent=4)
+    # print(res)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
 
 
 if __name__ == '__main__':
