@@ -4,6 +4,16 @@ import numpy as np
 from time import sleep
 import cv2
 from scipy.ndimage import zoom
+
+stop=0
+
+def stop_thread():
+    global stop
+    stop=1
+def start_thread():
+    global stop
+    stop=0
+
 def extract_face_features(gray, detected_face, offset_coefficients):
         (x, y, w, h) = detected_face
         #print x , y, w ,h
@@ -95,10 +105,18 @@ def func():
 
 
         # Display the resulting frame
-        cv2.imshow('Video', frame)
+        #cv2.imshow('Video', frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+
+        if stop==1:
+            video_capture.release()
+            while True:
+                if stop==0:
+                    video_capture=cv2.VideoCapture(0)
+                    break
+
 
         # When everything is done, release the capture
     video_capture.release()
