@@ -22,32 +22,31 @@ from scipy.ndimage import zoom
 stop=0
 problike=0
 probdislike=0
-countlike=0
-countdislike=0
-matrix={}
+count=0
+w, h = 5, 7;
+matrix = [[[0,0,0] for x in range(w)] for y in range(h)] 
+# for i in (0,5):
+#     for j in (0,7):
+#         matrix[i][j]=[0,0,0]
 
-def trigger(a,b):
-    global probdislike,problike,countlike,countdislike,matrix
-    if (a,b) in matrix:
-        matrix[a,b][0]=matrix[a,b][0]+problike
-        matrix[a,b][1]=matrix[a,b][1]+probdislike
-        matrix[a,b][2]=matrix[a,b][2]+countlike
-        matrix[a,b][3]=matrix[a,b][3]+countdislike     
-    else:
-        matrix[a,b]=[]
-        matrix[a,b].append(problike)
-        matrix[a,b].append(probdislike)
-        matrix[a,b].append(countlike)
-        matrix[a,b].append(countdislike)
-
+def change_active(a,b):
+    global probdislike,problike,count,matrix
+    matrix[a][b][0]=matrix[a][b][0]+problike
+    matrix[a][b][1]=matrix[a][b][1]+probdislike
+    matrix[a][b][2]=matrix[a][b][2]+count  
+    problike=0
+    probdislike=0
+    count=0
 
 def finaldata():
     global matrix
     toreturn={}
     for key in matrix:
-        toreturn[key]=[]
-        toreturn.append(matrix[key][0]/matrix[key][2])
-        toreturn.append(matrix[key][1]/matrix[key][3])
+        if matrix[key][2]!=0:
+            toreturn[key]=matrix[key][0]/matrix[key][2]
+        else: 
+            toreturn[key]=0
+    print(matrix[0,1])
     return toreturn
 
 def stop_thread():
@@ -91,7 +90,7 @@ def func():
     """
 Best performing model till now. Added layers to the webcamemocognizer one.
 """
-    global probdislike,problike,countlike,countdislike,stop
+    global probdislike,problike,count,stop
 
     model = Sequential()
     model.add(Convolution2D(32, (3, 3), padding='valid', input_shape=(48,48,1)))
@@ -161,23 +160,23 @@ Best performing model till now. Added layers to the webcamemocognizer one.
                 # annotate main image with a label
                 if prediction_result == 1:
                     cv2.putText(frame, "like!!",(x,y), cv2.FONT_ITALIC, 2, 155, 10)
-                    print("Like")
+                    #print("Like")
                     problike=problike+pn[0][1]
                     probdislike=probdislike+pn[0][0]
-                    countlike=countlike+1
+                    count=count+1
                 elif prediction_result == 0:
                     cv2.putText(frame, "dislike",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-                    print("DisLike")
+                    #print("DisLike")
                     problike=problike+pn[0][1]
                     probdislike=probdislike+pn[0][0]
-                    countdislike=countdislike+1
+                    count=count+1
 
                 # increment counter
                 face_index += 1
 
 
         # Display the resulting frame
-        cv2.imshow('Video', frame)
+        #cv2.imshow('Video', frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break

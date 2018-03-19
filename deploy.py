@@ -7,8 +7,8 @@ import json
 
 from flask import Flask, render_template, request, jsonify,make_response
 from threading import Thread
-from DetectEmotion import func, stop_thread, start_thread
-from graph import grph
+from DetectEmotion import func, stop_thread, start_thread, change_active, finaldata
+from graph import grph, suggest
 import os
 event=1
 app = Flask(__name__)
@@ -33,9 +33,16 @@ def main():
 @app.route('/background',methods=['POST','GET'])
 def a():
     if request.method == 'GET':
-        print(val)
-        data = request.args.get('data')
+        data = int(request.args.get('data'))
+        sec_no=int(data/10)
+        slide_no=data%10
         print (data)
+        change_active(sec_no,slide_no)
+        prob=finaldata()
+        print(prob)
+        res=suggest(prob)
+        print(res['sugg_cities'])
+        print(res['sugg_places'])
         return jsonify({})
 
 @app.route('/plan',methods=['GET','POST'])
