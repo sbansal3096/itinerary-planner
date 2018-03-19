@@ -6,6 +6,35 @@ import cv2
 from scipy.ndimage import zoom
 
 stop=0
+problike=0
+probdislike=0
+countlike=0
+countdislike=0
+matrix={}
+
+def trigger(a,b):
+    global probdislike,problike,countlike,countdislike,matrix
+    if (a,b) in matrix:
+        matrix[a,b][0]=matrix[a,b][0]+problike
+        matrix[a,b][1]=matrix[a,b][1]+probdislike
+        matrix[a,b][2]=matrix[a,b][2]+countlike
+        matrix[a,b][3]=matrix[a,b][3]+countdislike     
+    else:
+        matrix[a,b]=[]
+        matrix[a,b].append(problike)
+        matrix[a,b].append(probdislike)
+        matrix[a,b].append(countlike)
+        matrix[a,b].append(countdislike)
+
+
+def finaldata():
+    global matrix
+    toreturn={}
+    for key in matrix:
+        toreturn[key]=[]
+        toreturn.append(matrix[key][0]/matrix[key][2])
+        toreturn.append(matrix[key][1]/matrix[key][3])
+    return toreturn
 
 def stop_thread():
     global stop
@@ -31,7 +60,7 @@ def extract_face_features(gray, detected_face, offset_coefficients):
         return new_extracted_face
 
 def detect_face(frame):
-        cascPath = "./models/haarcascade_frontalface_default.xml"
+        cascPath = "haarcascade_frontalface_default.xml"
         faceCascade = cv2.CascadeClassifier(cascPath)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         detected_faces = faceCascade.detectMultiScale(
@@ -45,11 +74,43 @@ def detect_face(frame):
 
 
 def func():
-    model = model_from_json(open('./models/Face_model_architecture.json').read())
+    """
+Best performing model till now. Added layers to the webcamemocognizer one.
+"""
+    global probdislike,problike,countlike,countdislike
+
+    model = Sequential()
+    model.add(Convolution2D(32, (3, 3), padding='valid', input_shape=(48,48,1)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Convolution2D(64,(3,3),padding='valid',activation='relu'))
+    #model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Convolution2D(128,(3,3),padding='valid'))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Convolution2D(256,(3,3),padding='valid'))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Flatten())
+    model.add(Dense(128,kernel_initializer="lecun_uniform"))
+    #model.add(Dense(128))
+    model.add(Activation('relu'))
+    model.add(Dense(2))
+    model.add(Activation('softmax'))
+
+
+    #model = model_from_json(open('./models/Face_model_architecture.json').read())
     #model.load_weights('_model_weights.h5')
-    model.load_weights('./models/Face_model_weights.h5')
-    sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
-    model.compile(loss='categorical_crossentropy', optimizer=sgd)
+    model.load_weights('deep_model_weights_binary_best.h5py')
+    #optimizer =Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0)
+    sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+
+    model.compile(loss='binary_crossentropy', optimizer=sgd)
 
     cascPath = "haarcascade_frontalface_default.xml"
     faceCascade = cv2.CascadeClassifier(cascPath)
@@ -79,26 +140,23 @@ def func():
 
                 # predict smile
                 prediction_result = model.predict_classes(extracted_face.reshape(1,48,48,1))
-
+                pn=model.predict(xtracted_face.reshape(1,48,48,1))    
                 # draw extracted face in the top right corner
                 frame[face_index * 48: (face_index + 1) * 48, -49:-1, :] = cv2.cvtColor(extracted_face * 255, cv2.COLOR_GRAY2RGB)
 
                 # annotate main image with a label
-                if prediction_result == 3:
-                    cv2.putText(frame, "Happy!!",(x,y), cv2.FONT_ITALIC, 2, 155, 10)
+                if prediction_result == 1:
+                    cv2.putText(frame, "like!!",(x,y), cv2.FONT_ITALIC, 2, 155, 10)
+                    print("Like")
+                    problike=problike+pn[1]
+                    probdislike=probdislike+pn[0]
+                    countlike=countlike+1
                 elif prediction_result == 0:
-                    cv2.putText(frame, "Angry",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-                elif prediction_result == 1:
-                    cv2.putText(frame, "Disgust",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-                elif prediction_result == 2:
-                    cv2.putText(frame, "Fear",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-                elif prediction_result == 4:
-                    cv2.putText(frame, "Sad",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-                elif prediction_result == 5:
-                    cv2.putText(frame, "Surprise",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-                else:
-                    cv2.putText(frame, "Neutral",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
-
+                    cv2.putText(frame, "dislike",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
+                    print("DisLike")
+                    problike=problike+pn[1]
+                    probdislike=probdislike+pn[0]
+                    countdislike=countdislike+1
 
                 # increment counter
                 face_index += 1

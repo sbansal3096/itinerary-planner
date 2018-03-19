@@ -1,11 +1,20 @@
-from keras.models import model_from_json
-from keras.optimizers import SGD
 
-from flask import Flask, render_template, request, jsonify
+from __future__ import print_function
+from future.standard_library import install_aliases
+install_aliases()
+
+from urllib.parse import urlparse, urlencode
+from urllib.request import urlopen, Request
+from urllib.error import HTTPError
+
+import json
+
+from flask import Flask, render_template, request, jsonify,make_response
 from threading import Thread
 from DetectEmotion import func, stop_thread, start_thread
 from graph import grph
-
+import os
+event=1
 app = Flask(__name__)
 
 
@@ -50,27 +59,52 @@ def b():
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    req = request.get_json(silent=True, force=True)
+    if(event==1):
+        req = request.get_json(silent=True, force=True)
 
 
-    if(req.get("result").get("action")=="ask_time"):
+        if(req.get("result").get("action")=="ask_time"):
 
-        param=req.get("result").get("parameters")
-        #budget
-        print(param['unit-currency']['amount'])
-    elif(req.get("result").get("action")=="thank"):
-        param=req.get("result").get("parameters")
-        #time
-        print(param['duration']['amount'])
-    res = {}
+            param=req.get("result").get("parameters")
+            print(param['unit-currency']['amount'])
+        elif(req.get("result").get("action")=="thank"):
+            param=req.get("result").get("parameters")
+            print(param['duration']['amount'])
+        res = {
+        "followupEvent": {
+        "name": "custom_event",
+        "data": {
+      }
+   }
+}
 
-    res = json.dumps(res, indent=4)
-    # print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
+        res = json.dumps(res, indent=4)
+        # print(res)
+        r = make_response(res)
+        r.headers['Content-Type'] = 'application/json'
+        return r
+    else:
+        req = request.get_json(silent=True, force=True)
+
+
+        if(req.get("result").get("action")=="ask_time"):
+
+            param=req.get("result").get("parameters")
+            print(param['unit-currency']['amount'])
+        elif(req.get("result").get("action")=="thank"):
+            param=req.get("result").get("parameters")
+            print(param['duration']['amount'])
+        res = {}
+
+        res = json.dumps(res, indent=4)
+        # print(res)
+        r = make_response(res)
+        r.headers['Content-Type'] = 'application/json'
+        return r
+
 
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    port = int(os.getenv('PORT', 5000))
+    app.run(debug=False, port=port, host='0.0.0.0')
