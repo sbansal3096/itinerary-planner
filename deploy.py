@@ -19,10 +19,10 @@ thread1=Thread(target=func,args=())
 
 @app.route('/',methods=['POST','GET'])
 def main():
-    start_thread()
-    global thread1
-    if thread1.isAlive()==False:
-        thread1.start()
+    # start_thread()
+    # global thread1
+    # if thread1.isAlive()==False:
+        # thread1.start()
     return render_template("index.html")
 
 @app.route('/background',methods=['POST','GET'])
