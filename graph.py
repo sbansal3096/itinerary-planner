@@ -24,7 +24,8 @@ def suggest(prob_mat):
 		for j in range(0,cnt[i]):
 			if prob_mat[i,j]>0.5:
 				sugg_places.append((i,j))
-			prob_arr[i]+=2*prob_mat[i,j]-1
+			if prob_mat[i,j]!=0:
+				prob_arr[i]+=2*prob_mat[i,j]-1
 		if prob_arr[i]>0:
 			sugg_cities.append(i)
 	return {'sugg_places':sugg_places,'sugg_cities':sugg_cities}

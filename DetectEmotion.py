@@ -23,11 +23,8 @@ stop=0
 problike=0
 probdislike=0
 count=0
-w, h = 5, 7;
+w, h = 7, 5;
 matrix = [[[0,0,0] for x in range(w)] for y in range(h)] 
-# for i in (0,5):
-#     for j in (0,7):
-#         matrix[i][j]=[0,0,0]
 
 def change_active(a,b):
     global probdislike,problike,count,matrix
@@ -41,12 +38,12 @@ def change_active(a,b):
 def finaldata():
     global matrix
     toreturn={}
-    for key in matrix:
-        if matrix[key][2]!=0:
-            toreturn[key]=matrix[key][0]/matrix[key][2]
-        else: 
-            toreturn[key]=0
-    print(matrix[0,1])
+    for i in range(0,5):
+        for j in range(0,7):
+            if matrix[i][j][2]!=0:
+                toreturn[i,j]=matrix[i][j][0]/matrix[i][j][2]
+            else: 
+                toreturn[i,j]=0
     return toreturn
 
 def stop_thread():
