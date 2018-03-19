@@ -24,13 +24,13 @@ problike=0
 probdislike=0
 count=0
 w, h = 7, 5;
-matrix = [[[0,0,0] for x in range(w)] for y in range(h)] 
+matrix = [[[0,0,0] for x in range(w)] for y in range(h)]
 
 def change_active(a,b):
     global probdislike,problike,count,matrix
     matrix[a][b][0]=matrix[a][b][0]+problike
     matrix[a][b][1]=matrix[a][b][1]+probdislike
-    matrix[a][b][2]=matrix[a][b][2]+count  
+    matrix[a][b][2]=matrix[a][b][2]+count
     problike=0
     probdislike=0
     count=0
@@ -42,7 +42,7 @@ def finaldata():
         for j in range(0,7):
             if matrix[i][j][2]!=0:
                 toreturn[i,j]=matrix[i][j][0]/matrix[i][j][2]
-            else: 
+            else:
                 toreturn[i,j]=0
     return toreturn
 
@@ -150,7 +150,7 @@ Best performing model till now. Added layers to the webcamemocognizer one.
 
                 # predict smile
                 prediction_result = model.predict_classes(extracted_face.reshape(1,48,48,1))
-                pn=model.predict(extracted_face.reshape(1,48,48,1))    
+                pn=model.predict(extracted_face.reshape(1,48,48,1))
                 # draw extracted face in the top right corner
                 frame[face_index * 48: (face_index + 1) * 48, -49:-1, :] = cv2.cvtColor(extracted_face * 255, cv2.COLOR_GRAY2RGB)
 
