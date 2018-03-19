@@ -91,7 +91,7 @@ def func():
     """
 Best performing model till now. Added layers to the webcamemocognizer one.
 """
-    global probdislike,problike,countlike,countdislike
+    global probdislike,problike,countlike,countdislike,stop
 
     model = Sequential()
     model.add(Convolution2D(32, (3, 3), padding='valid', input_shape=(48,48,1)))
@@ -154,7 +154,7 @@ Best performing model till now. Added layers to the webcamemocognizer one.
 
                 # predict smile
                 prediction_result = model.predict_classes(extracted_face.reshape(1,48,48,1))
-                pn=model.predict(xtracted_face.reshape(1,48,48,1))    
+                pn=model.predict(extracted_face.reshape(1,48,48,1))    
                 # draw extracted face in the top right corner
                 frame[face_index * 48: (face_index + 1) * 48, -49:-1, :] = cv2.cvtColor(extracted_face * 255, cv2.COLOR_GRAY2RGB)
 
@@ -162,14 +162,14 @@ Best performing model till now. Added layers to the webcamemocognizer one.
                 if prediction_result == 1:
                     cv2.putText(frame, "like!!",(x,y), cv2.FONT_ITALIC, 2, 155, 10)
                     print("Like")
-                    problike=problike+pn[1]
-                    probdislike=probdislike+pn[0]
+                    problike=problike+pn[0][1]
+                    probdislike=probdislike+pn[0][0]
                     countlike=countlike+1
                 elif prediction_result == 0:
                     cv2.putText(frame, "dislike",(x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 155, 10)
                     print("DisLike")
-                    problike=problike+pn[1]
-                    probdislike=probdislike+pn[0]
+                    problike=problike+pn[0][1]
+                    probdislike=probdislike+pn[0][0]
                     countdislike=countdislike+1
 
                 # increment counter
@@ -177,7 +177,7 @@ Best performing model till now. Added layers to the webcamemocognizer one.
 
 
         # Display the resulting frame
-        #cv2.imshow('Video', frame)
+        cv2.imshow('Video', frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
