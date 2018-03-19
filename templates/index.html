@@ -100,28 +100,52 @@
 
 	</head>
 	<body>
-        <script type=text/javascript>
-            $(function() {
-                $('#plan').bind('click', function() {
-                    $.getJSON('/plan', {
-                        data: '2'
-                        }, function(data) {
-                    });
+		<script type=text/javascript>
+					$(function() {
+							$('#plan').bind('click', function() {
+									$.getJSON('/plan', {
+											data: '2'
+											}, function(data) {
+									});
+									 $.ajax({
+											type : "POST",
+											url : '/plan',
+											data: JSON.stringify({'val':3}),
+											contentType: 'application/json;charset=UTF-8',
+											success: function(result) {
+													console.log(result);
+											}
+									});
+									//window.location="https://localhost:5000/plan"
+							});
+					});
+					$(function() {
+							$('#plan1').bind('click', function() {
 
-                     $.ajax({
-                        type : "POST",
-                        url : '/plan',
-                        data: JSON.stringify({'val':3}),
-                        contentType: 'application/json;charset=UTF-8',
-                        success: function(result) {
-                            console.log(result);
-                        }
-                    });
-                    //window.location="https://localhost:5000/plan"
+									var activeSectionIndex = $('.fp-section.active').index();
+									//var activeSlideIndex = $('.fp-section.active').find('.slide.active').index();
+									if(activeSectionIndex==0){
+									alert('sec3');
+									}
+									console.log('ay');
+									console.log(activeSectionIndex);
+									$.fn.fullpage.moveSectionUp();
+							 });
+					});
+					$(function(){
+							$('#wrapper').fullpage({
+							onLeave: function(index, nextIndex, direction){
+									var leavingSection = $(this);
+									$.getJSON('/background', {
+											data: ''+(index-1)*10
+											}, function(data) {
+									});
+									}
+							});
+					});
 
-                });
-            });
-        </script>
+			</script>
+
 
 		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
 			<a class="navbar-brand" href="#">Rajasthan</a>

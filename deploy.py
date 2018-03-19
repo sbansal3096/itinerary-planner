@@ -1,11 +1,15 @@
-from keras.models import model_from_json
-from keras.optimizers import SGD
+from urllib.parse import urlparse, urlencode
+from urllib.request import urlopen, Request
+from urllib.error import HTTPError
 
-from flask import Flask, render_template, request, jsonify
+import json
+
+from flask import Flask, render_template, request, jsonify,make_response
 from threading import Thread
-from DetectEmotion import func, stop_thread, start_thread
-from graph import grph
-
+from DetectEmotion import func, stop_thread, start_thread, change_active, finaldata
+from graph import grph, suggest
+import os
+event=1
 app = Flask(__name__)
 
 
@@ -19,18 +23,25 @@ thread1=Thread(target=func,args=())
 
 @app.route('/',methods=['POST','GET'])
 def main():
-    # start_thread()
-    # global thread1
-    # if thread1.isAlive()==False:
-        # thread1.start()
+    start_thread()
+    global thread1
+    if thread1.isAlive()==False:
+        thread1.start()
     return render_template("index.html")
 
 @app.route('/background',methods=['POST','GET'])
 def a():
     if request.method == 'GET':
-        print(val)
-        data = request.args.get('data')
+        data = int(request.args.get('data'))
+        sec_no=int(data/10)
+        slide_no=data%10
         print (data)
+        change_active(sec_no,slide_no)
+        prob=finaldata()
+        print(prob)
+        res=suggest(prob)
+        print(res['sugg_cities'])
+        print(res['sugg_places'])
         return jsonify({})
 
 @app.route('/plan',methods=['GET','POST'])
@@ -50,27 +61,52 @@ def b():
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    req = request.get_json(silent=True, force=True)
+    if(event==1):
+        req = request.get_json(silent=True, force=True)
 
 
-    if(req.get("result").get("action")=="ask_time"):
+        if(req.get("result").get("action")=="ask_time"):
 
-        param=req.get("result").get("parameters")
-        #budget
-        print(param['unit-currency']['amount'])
-    elif(req.get("result").get("action")=="thank"):
-        param=req.get("result").get("parameters")
-        #time
-        print(param['duration']['amount'])
-    res = {}
+            param=req.get("result").get("parameters")
+            print(param['unit-currency']['amount'])
+        elif(req.get("result").get("action")=="thank"):
+            param=req.get("result").get("parameters")
+            print(param['duration']['amount'])
+        res = {
+        "followupEvent": {
+        "name": "custom_event",
+        "data": {
+      }
+   }
+}
 
-    res = json.dumps(res, indent=4)
-    # print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
+        res = json.dumps(res, indent=4)
+        # print(res)
+        r = make_response(res)
+        r.headers['Content-Type'] = 'application/json'
+        return r
+    else:
+        req = request.get_json(silent=True, force=True)
+
+
+        if(req.get("result").get("action")=="ask_time"):
+
+            param=req.get("result").get("parameters")
+            print(param['unit-currency']['amount'])
+        elif(req.get("result").get("action")=="thank"):
+            param=req.get("result").get("parameters")
+            print(param['duration']['amount'])
+        res = {}
+
+        res = json.dumps(res, indent=4)
+        # print(res)
+        r = make_response(res)
+        r.headers['Content-Type'] = 'application/json'
+        return r
+
 
 
 
 if __name__ == '__main__':
+    #port = int(os.getenv('PORT', 5000))
     app.run(debug=False)
