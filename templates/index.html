@@ -15,91 +15,13 @@
       crossorigin="anonymous"></script>
     <script src="../static/js/jquery.fullPage.js"></script>
     <link rel="stylesheet" href="../static/css/jquery.fullPage.css">
-    <style>
-    nav{
-        border-bottom: 4px solid #ff0066;
-    }
-    .section{
-        font-family: helvetica,arial;
-        font-weight:bold;
-        text-align:center;
-        position:relative;
-    }
-    /* .box{
-        position: absolute;
-   }
-    iframe{
-        position: absolute;
-        left:500px;
-        z-index: 100;
-        height:400px;
-        width:300px;
-    } */
-    p,h3{
-        color:black;
-        font-size: bold;
-    }
-    img{
-        width:100%;
-        height:600px;
-        border: 5px solid #ff0066;
-        /* position:absolute; */
-        /* opacity: 1.0;
-     filter: alpha(100); */
-        }
-    /* img:hover {
-    opacity: 0.5;
-    filter: alpha(50); /* For IE8 and earlier */
-    .carousel-indicators{
-        color:black;
-    }
-    .box1{
-        background-color:#ffe6f2;
-    }
-    .box2{
-        background-color: #ffcce5;
-    }
-    .box3{
-        background-color: #ff66ad;
-    }
-    .box4{
-        background-color: #ff3392;
-    }
-    .box5{
-        background-color: #ff0077;
-    }
-    #fixedbutton {
-        width:20px;
-        height:20px;
-    position: fixed;
-    bottom: 60px;
-    right: 80px;
-}
-#icon{
-    text-shadow: 1px 1px 1px #ccc;
-    font-size: 4em;
-        color:blue;
-}
-.iconclass{
-    border: 2px solid black;
- border-radius: 50%;
- height:40px;
- width:40px;
-}
-#myModal {
-  top:15%;
-  left:76%;
-  outline: none;
-    width:350px;
-}
-    </style>
-
+    
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
     </head>
     <body>
         <script type=text/javascript>
-            $(function(){
+            /*$(function(){
                 $('#wrapper').fullpage({
                 onLeave: function(index, nextIndex, direction){
                         var leavingSection = $(this);
@@ -117,7 +39,7 @@
                         });
                     }
                 });
-            });
+            });*/
             $(function() {
                     $('#plan').bind('click', function() {
                             var index = $('.fp-section.active').index();
@@ -156,16 +78,6 @@
                             });
                             //window.location="https://localhost:5000/plan"
                     });
-            $(function() {
-                $('#btn_close').bind('click', function() {
-                    console.log("yes");
-                    $.getJSON('/strtcam', {
-                                data: ''
-                            }, function(data) {
-                        });
-                    });
-                    //window.location="https://localhost:5000/plan"
-            });
     </script>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
@@ -452,7 +364,7 @@
         </div>
 
     <script>
-        
+
         function startthread(){
             console.log("yes");
                     $.getJSON('/strtcam', {

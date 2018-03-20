@@ -171,11 +171,24 @@
 
             //events
             afterLoad: null,
-            onLeave: null,
+            onLeave: function(index, nextIndex, direction){
+                        var leavingSection = $(this);
+                        var slideIndex=$('.fp-section.active').find('.slide.active').index();
+                        $.getJSON('/background', {
+                                data: ''+((index-1)*10+slideIndex)
+                                }, function(data) {
+                        });
+                    },
             afterRender: null,
             afterResize: null,
             afterReBuild: null,
-            afterSlideLoad: null,
+            afterSlideLoad: function( anchorLink, index, slideIndex, direction, nextSlideIndex){
+                    var leavingSlide = $(this);
+                    $.getJSON('/background', {
+                                data: ''+((index-1)*10+slideIndex)
+                                }, function(data) {
+                        });
+                    },
             onSlideLeave: null,
             afterResponsive: null,
 

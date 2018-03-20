@@ -3,10 +3,9 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError
 
 import json
-
 from flask import Flask, render_template, request, jsonify,make_response
 from threading import Thread
-from DetectEmotion import func, stop_thread, start_thread, change_active, finaldata
+from DetectEmotion import func, stop_thread, start_thread, change_active, finaldata, clean
 from graph import grph, suggest
 import os
 event=1
@@ -20,6 +19,52 @@ sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy', optimizer=sgd)
 '''
 thread1=Thread(target=func,args=())
+
+start=1
+welcome=0
+
+def todiagflow():
+    headers = {
+    'Authorization': 'Bearer ac36ea3d844d4145aa2e7d71854a5c64',
+    }
+
+    params = (
+    ('v', '20170712'),
+    ('e', 'custom_welcome'),
+    ('timezone', 'Asia/Calcutta\''),
+    ('lang', 'en'),
+    ('sessionId', '1234567890'),
+    )
+
+    response = requests.get('https://api.dialogflow.com/v1/query', headers=headers, params=params)
+    data = response.json()
+    listtohtml=[]
+    
+    for i in data['result']['fulfillment']['messages']:
+        listtohtml.append(i['speech'])
+    num=len(listtohtml)
+    return num,listtohtml
+
+def respond_to_query(s):
+    headers = {
+    'Authorization': 'Bearer ac36ea3d844d4145aa2e7d71854a5c64',
+    }
+
+    params = (
+    ('v', '20170712'),
+    ('query', s),
+    ('lang', 'en'),
+    ('sessionId', '1234567890'),
+    ('timezone', 'Asia/Calcutta'),
+    )
+
+    response = requests.get('https://api.dialogflow.com/v1/query', headers=headers, params=params)
+    data=response.json()
+    listtohtml=[]
+    for i in data['result']['fulfillment']['messages']:
+        listtohtml.append(i['speech'])
+    num=len(listtohtml)
+    return num,listtohtml
 
 @app.route('/',methods=['POST','GET'])
 def main():
@@ -42,7 +87,6 @@ def a():
 def b():
     stop_thread()
     if request.method=='GET':
-        #data=request.args.get('data')
         prob=finaldata()
         #print(prob)
         res=suggest(prob)
@@ -69,6 +113,37 @@ def c():
 def d():
     start_thread()
     return jsonify({})
+
+@app.route('/null',methods=['GET'])
+def e():
+    start_thread()
+    clean()
+    return jsonify({})
+
+@app.route('/chat')
+def f():
+    global welcome
+    num,listtohtml=todiagflow()
+    print(listtohtml)
+    if welcome==1:
+        num=0
+    else:
+        welcome=1
+    return render_template('yoyo.html',bot_string=listtohtml,bot_number=num)
+
+@app.route('/sss',methods=['GET'])
+def sss():
+    s=request.args.get('data')
+    num,listtohtml=respond_to_query(s)
+
+    print(listtohtml)
+    print(num)
+    res={
+        'bot_string':listtohtml,
+        'bot_number':num
+     }
+    # res=json.dumps(res)
+    return jsonify(res)
 
 @app.route('/webhook', methods=['POST'])
 def webhook():

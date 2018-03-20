@@ -29,7 +29,7 @@ margin: 0;
 padding: 0;
 }
 .place{
-
+	display:block;
 	font-size: 30px;
 }
 #map {
@@ -58,4 +58,80 @@ height: 174px;
 }
 #list > h5{
 	text-decoration: underline;
+}
+nav{
+        border-bottom: 4px solid #ff0066;
+    }
+    .section{
+        font-family: helvetica,arial;
+        font-weight:bold;
+        text-align:center;
+        position:relative;
+    }
+    /* .box{
+        position: absolute;
+   }
+    iframe{
+        position: absolute;
+        left:500px;
+        z-index: 100;
+        height:400px;
+        width:300px;
+    } */
+    p,h3{
+        color:black;
+        font-size: bold;
+    }
+    img{
+        width:100%;
+        height:600px;
+        border: 5px solid #ff0066;
+        /* position:absolute; */
+        /* opacity: 1.0;
+     filter: alpha(100); */
+        }
+    /* img:hover {
+    opacity: 0.5;
+    filter: alpha(50); /* For IE8 and earlier */
+    .carousel-indicators{
+        color:black;
+    }
+    .box1{
+        background-color:#ffe6f2;
+    }
+    .box2{
+        background-color: #ffcce5;
+    }
+    .box3{
+        background-color: #ff66ad;
+    }
+    .box4{
+        background-color: #ff3392;
+    }
+    .box5{
+        background-color: #ff0077;
+    }
+    #fixedbutton {
+        width:20px;
+        height:20px;
+    position: fixed;
+    bottom: 60px;
+    right: 80px;
+}
+#icon{
+    text-shadow: 1px 1px 1px #ccc;
+    font-size: 4em;
+        color:blue;
+}
+.iconclass{
+    border: 2px solid black;
+ border-radius: 50%;
+ height:40px;
+ width:40px;
+}
+#myModal {
+  top:15%;
+  left:76%;
+  outline: none;
+    width:350px;
 }

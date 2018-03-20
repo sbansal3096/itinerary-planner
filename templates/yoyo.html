@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous">
+</script>
+
+  <style>
+  .disableScroll{
+        overflow-y:hidden;
+        overflow-x:hidden;
+  }
+  .chatbox,.type{
+    width:350px;
+    border:1px solid black;
+  }
+  #inp{
+    width:280px;
+    height:35px;
+  }
+  #user_inp{
+    margin-top: 5px;
+    margin-left:5px;
+    width:140px;
+    background-color: yellow;
+    color:black;
+    position: relative;
+    float: right;
+    border-radius: 5%;
+  }
+  #bot_inp{
+    margin-top: 5px;
+    margin-right:5px;
+    width:140px;
+    background-color: green;
+    color:white;
+    border-radius: 5%;
+  }
+  #cont{
+    height:120px;
+  }
+  </style>
+  </head>
+  <body class="disableScroll">
+    <div class="chatbox" style="overflow:auto;height:450px;">
+      <div id="msgs">
+      </div>
+    </div>
+    <div class="type">
+      <input type="text" name="inp" id="inp" value="Ask something..." style="color:#888;"
+    value="First Name" ></input>
+    <span><button class="btn btn-success" id="send_btn">Send</button></span>
+    </div>
+    <script>
+      $(function(){
+      var inp= document.getElementById('inp');
+      var send=document.getElementById('send_btn');
+      var msgs=document.getElementById('msgs');
+      // var bot=document.getElementById('bot');
+        var text=inp.value;
+        var bn,bs;
+        bn={{bot_number|safe}};
+        bs={{bot_string|safe}};
+         for(var i=0;i<bn;i++)
+          {
+            var cont=document.createElement('div');
+            cont.id="cont";
+            var ele2=document.createElement('p');
+            ele2.id="bot_inp";
+            var text2=document.createTextNode(bs[i]);
+            ele2.appendChild(text2);
+            document.body.appendChild(ele2);
+            document.body.appendChild(cont);
+            cont.appendChild(ele2);
+            msgs.appendChild(cont);
+          }
+        });
+      $(function(){
+        var bn,bs;
+        $('#send_btn').bind('click', function() {
+                 
+          var cont=document.createElement('div');
+          cont.id="cont";
+          var ele=document.createElement('p');
+          ele.id="user_inp";
+          var text=document.createTextNode(inp.value);
+          ele.appendChild(text);
+          document.body.appendChild(ele);
+          document.body.appendChild(cont);
+          cont.appendChild(ele);
+
+          $.getJSON('/sss', {
+                      data: inp.value
+                      }, function(data) {
+                        bn=data.bot_number;
+                        bs=data.bot_string;
+                        console.log(bn);
+          });
+
+          for(var i=0;i<bn;i++)
+          {
+            var ele2=document.createElement('p');
+            ele2.id="bot_inp";
+            var text2=document.createTextNode(bs[i]);
+            ele2.appendChild(text2);
+            document.body.appendChild(ele2);
+            document.body.appendChild(cont);
+            cont.appendChild(ele2);
+          }
+          //cont.appendChild(ele2);
+          //cont.appendChild(ele);
+          msgs.appendChild(cont);
+
+      });
+                  
+    });
+    </script>
+  </body>
+</html>

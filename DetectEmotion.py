@@ -34,6 +34,10 @@ def change_active(a,b):
     problike=0
     probdislike=0
     count=0
+def clean():
+    global probdislike,problike,count,matrix
+    w, h = 7, 5;
+    matrix = [[[0,0,0] for x in range(w)] for y in range(h)]
 
 def finaldata():
     global matrix
