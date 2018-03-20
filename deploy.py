@@ -36,23 +36,20 @@ def a():
         data = int(request.args.get('data'))
         sec_no=int(data/10)
         slide_no=data%10
-        print (data)
         change_active(sec_no,slide_no)
-        prob=finaldata()
-        print(prob)
-        res=suggest(prob)
-        print(res['sugg_cities'])
-        print(res['sugg_places'])
         return jsonify({})
 
 @app.route('/plan',methods=['GET','POST'])
 def b():
     stop_thread()
     if request.method=='GET':
-        data=request.args.get('data')
-        print(data)
-        res=grph([0,1,2,3,4])
-        return render_template("dir.html",fixedpts=res['fixedpts'],waypts=res['waypts'])
+        #data=request.args.get('data')
+        prob=finaldata()
+        #print(prob)
+        res=suggest(prob)
+        res1=grph(res['sugg_cities'],11,res['pref'])
+        print(res1['daycnt'])
+        return render_template("dir.html",fixedpts=res1['fixedpts'],waypts=res1['waypts'])
     else:
         data=request.get_json()
         print(data['val'])

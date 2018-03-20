@@ -14,11 +14,12 @@ time=[[0, 9.5, 6, 2.5,6.5],
 		[6.5, 8.5, 5, 4.5, 0]
 		]
 cnt=[7,5,5,4,5]
-vis_time=[10,6,3,3,5]
+vis_time=[10,8,4,3,5]
 
 def suggest(prob_mat):
 	sugg_places=[]
 	sugg_cities=[]
+	pref=[0,0,0,0,0]
 	prob_arr=[0,0,0,0,0]
 	for i in range(0,5):
 		for j in range(0,cnt[i]):
@@ -28,23 +29,57 @@ def suggest(prob_mat):
 				prob_arr[i]+=2*prob_mat[i,j]-1
 		if prob_arr[i]>0:
 			sugg_cities.append(i)
-	return {'sugg_places':sugg_places,'sugg_cities':sugg_cities}
+	print(prob_arr)
+	pp=[]
+	for i in range(5):
+		x=-10
+		xi=0
+		for j in range(len(prob_arr)):
+			if j not in pp:	
+				if x<prob_arr[j]:
+					x=prob_arr[j]
+					xi=j
+		pref[xi]=5-i
+		pp.append(xi)
+
+	return {'sugg_places':sugg_places,'sugg_cities':sugg_cities, 'pref':pref}
 	# max_prob=prob_arr[0]
 	# max_ind=0
 	# for i in (1,5):
 	# 	if prob_arr[i]>max_prob:
 	# 		max_prob=prob_arr[i]
 	# 		max_ind=i
+# def middle(a,b):
+# 	c=[b[0] for b in rows]
+# 	d=[0,0,0,0,0]
+# 	for x in c:
+# 		d[c]=d[c]+1
 
 
 
 
 
-def grph(b):
-	
+def grph(b,days,pref):
+	global vis_time,time,city,dist,cnt
 	st=0
 	en=0
+	su=0
+	while 2*days-1<len(b):
+		mini=pref[0]
+		minin=0
+		for i in range(len(pref)):
+			if mini<pref[i]:
+				mini=pref[i]
+				minin=i
+		del b[minin]
+		pref.remove(mini)
 
+	# for i in b:
+	# 	su+=vis_time[i]
+	# ma=sum
+	# for i in b:
+	# 	if vis_time[i]<ma:
+	# 		ma=vis_time[i]
 	for i in range(0,5):
 		if i in b:
 			st=i;
@@ -61,7 +96,19 @@ def grph(b):
 	end=city[en]
 	fixed=[start,end]
 	waypts=[]
+	daycnt=[]
 	for i in b:
 		if i!=st and i!=en:
 			waypts.append(city[i])
-	return {'fixedpts':fixed , 'waypts':waypts}
+	sd=0
+	totdays=0
+	for i in  b:
+		totdays=totdays+vis_time[i]
+
+	for i in range(len(b)-1):
+		v=int(round(((vis_time[b[i]])*days)/totdays))
+		daycnt.append(v)
+		sd=sd+v
+	daycnt.append(days-sd)
+
+	return {'fixedpts':fixed , 'waypts':waypts, 'daycnt':daycnt}
