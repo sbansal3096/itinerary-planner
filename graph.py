@@ -1,5 +1,5 @@
 city=["Jaipur, Rajasthan", "Jaisalmer, Rajasthan", "Jodhpur, Rajasthan","Ajmer, Rajasthan","Udaipur, Rajasthan"]
-
+city1=["Jaipur, Rajasthan, India","Jaisalmer, Rajasthan 345001, India", "Jodhpur, Rajasthan, India","Ajmer, Rajasthan, India","Udaipur, Rajasthan, India"]
 dist =[[0, 560, 350, 135,400],
 		[560, 0, 290, 480, 530],
 		[350, 290, 0, 200, 260],
@@ -96,7 +96,7 @@ def grph(b,days,pref):
 	end=city[en]
 	fixed=[start,end]
 	waypts=[]
-	daycnt=[]
+	daycnt={}
 	for i in b:
 		if i!=st and i!=en:
 			waypts.append(city[i])
@@ -107,8 +107,8 @@ def grph(b,days,pref):
 
 	for i in range(len(b)-1):
 		v=int(round(((vis_time[b[i]])*days)/totdays))
-		daycnt.append(v)
+		daycnt[city1[b[i]]]=v
 		sd=sd+v
-	daycnt.append(days-sd)
+	daycnt[city1[b[len(b)-1]]]=days-sd
 
 	return {'fixedpts':fixed , 'waypts':waypts, 'daycnt':daycnt}

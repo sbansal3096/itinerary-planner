@@ -48,7 +48,7 @@ def b():
         res=suggest(prob)
         res1=grph(res['sugg_cities'],11,res['pref'])
         print(res1['daycnt'])
-        return render_template("dir.html",fixedpts=res1['fixedpts'],waypts=res1['waypts'])
+        return render_template("dir.html",fixedpts=res1['fixedpts'],waypts=res1['waypts'],daycnt=res1['daycnt'])
     else:
         data=request.get_json()
         print(data['val'])

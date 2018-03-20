@@ -103,7 +103,7 @@
     <title>Waypoints in directions</title>
     <link rel="stylesheet" href="../static/css/styling.css">
   </head>
-  <body class="scrolldisable">
+  <body class="disableScroll">
     <div id="right-panel">
       <div id="list" style="overflow:auto;height:700px;"></div>
     </div>
@@ -117,6 +117,7 @@
     <script type=text/javascript>
       var fixed={{fixedpts|safe}};
       var waypts1={{waypts|safe}};
+      var daycnt={{daycnt|safe}};
       var str_jaipur="Jaipur is the capital of India’s Rajasthan state. It evokes the royal family that once ruled the region and that, in 1727, founded what is now called the Old City, or “Pink City” for its trademark building color. At the center of its stately street grid (notable in India) stands the opulent, colonnaded City Palace complex.";
       var str_ajmer="Ajmer is a city in the northern Indian state of Rajasthan. South of the city's artificial Ana Sagar Lake is Ajmer Sharif Dargah, the domed shrine of the Muslim Sufi saint Garib Nawaz. Nearby, a 16th-century palace built by the Mughal emperor Akbar now houses the Ajmer Government Museum, displaying armor and stone sculptures.";
       var str_jaisalmer="Jaisalmer is a former medieval trading center and a princely state in the western Indian state of Rajasthan, in the heart of the Thar Desert. Known as the Golden City, it's distinguished by its yellow sandstone architecture. Dominating the skyline is Jaisalmer Fort, a sprawling hilltop citadel buttressed by 99 bastions.";

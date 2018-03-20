@@ -123,22 +123,23 @@
                             var index = $('.fp-section.active').index();
                             var slideIndex = $('.fp-section.active').find('.slide.active').index();
                             $.getJSON('/background', {
-                                data: ''+((index-1)*10+slideIndex)
+                                data: ''+(  index*10+slideIndex)
                                 }, function(data) {
                         });
-                     });
+                    });
+                    console.log("yes")
             });
             $(function() {
-                            $('#plan1').bind('click', function() {
-                                    var activeSectionIndex = $('.fp-section.active').index();
-                                    //var activeSlideIndex = $('.fp-section.active').find('.slide.active').index();
-                                    if(activeSectionIndex==0){
-                                    alert('sec3');
-                                    }
-                                    console.log('ay');
-                                    console.log(activeSectionIndex);
-                                    $.fn.fullpage.moveSectionUp();
-                             });
+                    $('#plan1').bind('click', function() {
+                            var activeSectionIndex = $('.fp-section.active').index();
+                            //var activeSlideIndex = $('.fp-section.active').find('.slide.active').index();
+                            if(activeSectionIndex==0){
+                            alert('sec3');
+                            }
+                            console.log('ay');
+                            console.log(activeSectionIndex);
+                            $.fn.fullpage.moveSectionUp();
+                        });
                     });
             $(function() {
                     $('#plan2').bind('click', function() {
