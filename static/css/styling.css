@@ -9,7 +9,6 @@ padding:21px 0;
 #right-panel {
 font-family: 'Roboto','sans-serif';
 line-height: 30px;
-margin: 1%;
 }
 
 #right-panel select, #right-panel input {
@@ -29,11 +28,28 @@ margin: 0;
 padding: 0;
 }
 .place{
-	display:block;
 	font-size: 30px;
 }
+.city{
+	padding: 10px;
+	display: block;
+	cursor:pointer;
+    border-radius: 5%;
+}
+.city:hover{
+	background-color: #dee0e2;
+}
+.route{
+	display: block;
+	cursor: pointer;
+    border-radius: 3%;
+    padding: 10px;
+}
+.route:hover{
+	background-color: #ebeff4;
+}
 #map {
-width: 68%;
+width: 70%;
 height: 100%;
 }
 #right-panel {

@@ -90,21 +90,21 @@
                var end_cnt=daycnt[str6];
                //console.log(end_cnt);
                if(end_cnt!=1){
-                $('#list').append( '<div><h5 class="place">'+route.legs[0].start_address+'</h5><p>Day '+(start_cnt)+' - Day '+(start_cnt+end_cnt -1)+ '</p><p>'+description[str6]+'</p></div>' );
+                $('#list').append( '<div class="city"><h5 class="place">'+route.legs[0].start_address+'</h5><p>Day '+(start_cnt)+' - Day '+(start_cnt+end_cnt -1)+ '</p><p>'+description[str6]+'</p></div>' );
               }
                  else
-                 {$('#list').append( '<div><h5 class="place">'+route.legs[0].start_address+'</h5><p>Day '+(start_cnt) + '</p><p>'+description[str6]+'</p></div>' );}
+                 {$('#list').append( '<div class="city"><h5 class="place">'+route.legs[0].start_address+'</h5><p>Day '+(start_cnt) + '</p><p>'+description[str6]+'</p></div>' );}
                 start_cnt+=end_cnt;
                 if(len>1)
                 {
                   for (var i = 0; i < route.legs.length; i++) {
-                    $('#list').append( '<p><b>'+ 'Drive to ' + route.legs[i].end_address + ' :'    +route.legs[i].distance.text + '</b></p>' );
+                    $('#list').append( '<p class="route"><b>'+ 'Drive to ' + route.legs[i].end_address + ' :'    +route.legs[i].distance.text + '</b></p>' );
                     var str7=route.legs[i].end_address;
                     end_cnt=daycnt[str7];
                       if(end_cnt!=1)
-                    {$('#list').append( '<div><h5 class="place">'+route.legs[i].end_address+'</h5><p>Day '+(start_cnt)+' - Day '+(start_cnt+end_cnt -1)+ '</p><p>'+description[str7]+'</p></div>' );}
+                    {$('#list').append( '<div class="city"><h5 class="place">'+route.legs[i].end_address+'</h5><p>Day '+(start_cnt)+' - Day '+(start_cnt+end_cnt -1)+ '</p><p>'+description[str7]+'</p></div>' );}
                      else {
-                       $('#list').append( '<div><h5 class="place">'+route.legs[i].end_address+'</h5><p>Day '+(start_cnt) + '</p><p>'+description[str7]+'</p></div>' );
+                       $('#list').append( '<div class="city"><h5 class="place">'+route.legs[i].end_address+'</h5><p>Day '+(start_cnt) + '</p><p>'+description[str7]+'</p></div>' );
                    }
                     start_cnt+=end_cnt;
                   }
