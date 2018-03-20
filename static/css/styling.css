@@ -29,7 +29,7 @@ margin: 0;
 padding: 0;
 }
 .place{
-	
+
 	font-size: 30px;
 }
 #map {
@@ -51,4 +51,8 @@ background-color: #FFEE77;
 padding: 10px;
 overflow: scroll;
 height: 174px;
+}
+.disableScroll{
+      overflow-y:hidden;
+      overflow-x:hidden;
 }

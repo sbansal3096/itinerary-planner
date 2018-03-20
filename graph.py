@@ -2,8 +2,8 @@ city=["Jaipur, Rajasthan", "Jaisalmer, Rajasthan", "Jodhpur, Rajasthan","Ajmer, 
 
 dist =[[0, 560, 350, 135,400],
 		[560, 0, 290, 480, 530],
-		[350, 290, 0, 200, 260], 	
-		[135, 480, 200, 0, 265], 
+		[350, 290, 0, 200, 260],
+		[135, 480, 200, 0, 265],
 		[400, 530, 260, 265, 0]
 		]
 
@@ -35,7 +35,7 @@ def suggest(prob_mat):
 		x=-10
 		xi=0
 		for j in range(len(prob_arr)):
-			if j not in pp:	
+			if j not in pp:
 				if x<prob_arr[j]:
 					x=prob_arr[j]
 					xi=j
