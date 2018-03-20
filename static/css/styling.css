@@ -56,3 +56,6 @@ height: 174px;
       overflow-y:hidden;
       overflow-x:hidden;
 }
+#list > h5{
+	text-decoration: underline;
+}
