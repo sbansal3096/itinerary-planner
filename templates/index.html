@@ -99,59 +99,6 @@
     </head>
     <body>
         <script type=text/javascript>
-            $(function() {
-                    $('#plan2').bind('click', function() {
-                            $.getJSON('/plan', {
-                                    data: '2'
-                                    }, function(data) {
-                            });
-<<<<<<< HEAD
-                             $.ajax({
-                                    type : "POST",
-                                    url : '/plan',
-                                    data: JSON.stringify({'val':3}),
-                                    contentType: 'application/json;charset=UTF-8',
-                                    success: function(result) {
-                                            console.log(result);
-=======
-                    });
-                    $(function() {
-                            $('#plan1').bind('click', function() {
-                                    var activeSectionIndex = $('.fp-section.active').index();
-                                    //var activeSlideIndex = $('.fp-section.active').find('.slide.active').index();
-                                    if(activeSectionIndex==0){
-                                    alert('sec3');
-                                    }
-                                    console.log('ay');
-                                    console.log(activeSectionIndex);
-                                    $.fn.fullpage.moveSectionUp();
-                             });
-                    });
-                    $(function(){
-                            $('#wrapper').fullpage({
-                            onLeave: function(index, nextIndex, direction){
-                                    var leavingSection = $(this);
-                                    $.getJSON('/background', {
-                                            data: ''+(index-1)*10
-                                            }, function(data) {
-                                    });
->>>>>>> 88b257dbdcdd85e53d8b220d797bbd1267b57a56
-                                    }
-                            });
-                            //window.location="https://localhost:5000/plan"
-                    });
-<<<<<<< HEAD
-            });
-            $(function() {
-                    $('#plan').bind('click', function() {
-                            var index = $('.fp-section.active').index();
-                            var slideIndex = $('.fp-section.active').find('.slide.active').index();
-                            $.getJSON('/background', {
-                                data: ''+((index-1)*10+slideIndex)
-                                }, function(data) {
-                        });
-                     });
-            });
             $(function(){
                 $('#wrapper').fullpage({
                 onLeave: function(index, nextIndex, direction){
@@ -171,12 +118,47 @@
                     }
                 });
             });
-
+            $(function() {
+                    $('#plan').bind('click', function() {
+                            var index = $('.fp-section.active').index();
+                            var slideIndex = $('.fp-section.active').find('.slide.active').index();
+                            $.getJSON('/background', {
+                                data: ''+((index-1)*10+slideIndex)
+                                }, function(data) {
+                        });
+                     });
+            });
+            $(function() {
+                            $('#plan1').bind('click', function() {
+                                    var activeSectionIndex = $('.fp-section.active').index();
+                                    //var activeSlideIndex = $('.fp-section.active').find('.slide.active').index();
+                                    if(activeSectionIndex==0){
+                                    alert('sec3');
+                                    }
+                                    console.log('ay');
+                                    console.log(activeSectionIndex);
+                                    $.fn.fullpage.moveSectionUp();
+                             });
+                    });
+            $(function() {
+                    $('#plan2').bind('click', function() {
+                            $.getJSON('/plan', {
+                                    data: '2'
+                                    }, function(data) {
+                            });
+                             $.ajax({
+                                    type : "POST",
+                                    url : '/plan',
+                                    data: JSON.stringify({'val':3}),
+                                    contentType: 'application/json;charset=UTF-8',
+                                    success: function(result) {
+                                            console.log(result);
+                                    }
+                               });
+                            });
+                            //window.location="https://localhost:5000/plan"
+                    });
     </script>
-=======
-            </script>
-
->>>>>>> 88b257dbdcdd85e53d8b220d797bbd1267b57a56
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
             <a class="navbar-brand" href="#">Rajasthan</a>
@@ -273,7 +255,6 @@
 
     <!-- Jaisalmer Start -->
     <div class="section">
-<<<<<<< HEAD
 
         <div class="slide">
             <img  src="https://www.makemytrip.com/travel-guide/media/dg_image/jaisalmer/Vyas-Chhatri-Jaisalmer.jpg" alt="Vyas-Chhatri">
@@ -311,170 +292,52 @@
             <p>This is one of the largest national parks, covering an area of 3162 km². The Desert National Park is an excellent example of the ecosystem of the Thar Desert. </p>
         </div>
     </div>
-=======
-        <!-- <div class="box2">
-                    <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel" data-interval="100000">
-                        <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
-                    </ol> -->
-                            <!-- <div class="carousel-inner"> -->
-                                <div class="slide">
-                                    <img  src="https://www.makemytrip.com/travel-guide/media/dg_image/jaisalmer/Vyas-Chhatri-Jaisalmer.jpg" alt="Vyas-Chhatri">
-                                    <div >
-                                        <h3>Vyas Chhatri, Jaisalmer</h3>
-                                        <p>Vyas Chhatri as the name suggests, is dedicated to sage Vyaas, the writer of the epic Mahabharata.</p>
-                                    </div>
-                                 </div>
-                                <div class="slide">
-                                        <img src="http://www.liveblogspot.com/wp-content/uploads/2018/02/desert.jpg" alt="Golden City">
-
-                                        <div>
-                                            <h3>Golden City, Jaisalmer</h3>
-                                            <p>Situated in the heart of the Thar desert in Rajasthan, Jaisalmer city built on the foundation of yellow sandstone, justifies its tag as the 'Golden City' of India.</p>
-                                            </div>
-                                </div>
-                                <div class="slide">
-                                    <img src="https://www.tourpackagejaisalmer.com/images/patwon-ki-haveli.png" alt="Patwon Ki Haweli">
-                                    <div >
-                                        <h3>Patwon Ki Haweli, Jaisalmer</h3>
-                                        <p>Series of early-1800s palaces, now a museum featuring intricate carvings, furniture & artwork.</p>
-                                    </div>
-                                </div>
-                                <div class="slide">
-                                 <img  src="https://www.rajasthandirect.com/photoadmin/timthumb.php?src=/photoadmin/photos/-8808-1375687852.jpg&w=600&h=400&q=80" alt="Jaisalmer Fort">
-                                 <div>
-                                     <h3>Jaisalmer Fort, Jaisalmer</h3>
-                                     <p>Massive, 12th-century fortified city featuring ornate Jain temples with idols & stone carvings.</p>
-                                 </div>
-                             </div>
-                             <div class="slide">
-                                <img src="https://i2.wp.com/natureconservation.in/wp-content/uploads/2016/01/47-1.png" alt="Desert National Park">
-                                <div>
-                                    <h3>Desert National Park Jaisalmer</h3>
-                                    <p>This is one of the largest national parks, covering an area of 3162 km². The Desert National Park is an excellent example of the ecosystem of the Thar Desert. </p>
-                                </div>
-                            </div>
-                            </div>
-                            <!-- <a class="carousel-control-prev" href="#carouselExampleControls2" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls2" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
->>>>>>> 88b257dbdcdd85e53d8b220d797bbd1267b57a56
-    </div>
+</div>
+       
 
 <!-- Jaisalmer End -->
 
 <!-- Jodhpur Start -->
 <div class="section">
-<<<<<<< HEAD
-        <div class="slide">
-            <img src="https://s-ec.bstatic.com/images/hotel/max1280x900/568/56873738.jpg" alt="Umaid Bhawan Palace">
-            <div >
-                <h3>Umaid Bhawan Palace, Jodhpur</h3>
-                <p>Luxurious rooms & suites, some with balconies, plus complimentary breakfast & a serene spa.</p>
+
+            <div class="slide">
+                <img src="https://s-ec.bstatic.com/images/hotel/max1280x900/568/56873738.jpg" alt="Umaid Bhawan Palace">
+                <div >
+                    <h3>Umaid Bhawan Palace, Jodhpur</h3>
+                    <p>Luxurious rooms & suites, some with balconies, plus complimentary breakfast & a serene spa.</p>
+                </div>
+             </div>
+            <div class="slide">
+                    <img src="http://blog.prefertrip.com/wp-content/uploads/2015/03/Girdikot-Sardar-Market.jpg" alt="Sardar Market">
+
+                    <div>
+                        <h3>Sardar Market, Jodhpur</h3>
+                        <p>Bustling city marketplace with eateries, craft vendors, apparel & an iconic clock tower.</p>
+                        </div>
             </div>
+            <div class="slide">
+                <img src="https://c1.staticflickr.com/9/8011/7513365946_ab6c1bf20b_b.jpg" alt="Ghanta Ghar">
+                <div >
+                    <h3>Ghanta Ghar Jodhpur</h3>
+                    <p>Bustling city square known for its lively marketplace & soaring 19th-century clocktower.</p>
+                </div>
+            </div>
+            <div class="slide">
+             <img src="https://image3.mouthshut.com/images/imagesp/925752663s.jpg" alt="Jaswant Thada">
+             <div>
+                 <h3>Jaswant Thada, Jodhpur</h3>
+                 <p>Elaborately carved white marble funerary monument built in 1899 to honor Maharaja Jaswant Singh II.</p>
+             </div>
          </div>
-        <div class="slide">
-                <img src="http://blog.prefertrip.com/wp-content/uploads/2015/03/Girdikot-Sardar-Market.jpg" alt="Sardar Market">
-
-                <div>
-                    <h3>Sardar Market, Jodhpur</h3>
-                    <p>Bustling city marketplace with eateries, craft vendors, apparel & an iconic clock tower.</p>
-=======
-    <!-- <div class="box3">
-                <div id="carouselExampleControls3" class="carousel slide" data-ride="carousel" data-interval="100000">
-                    <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
-                </ol>
-                        <div class="carousel-inner"> -->
-                            <div class="slide">
-                                <img src="https://s-ec.bstatic.com/images/hotel/max1280x900/568/56873738.jpg" alt="Umaid Bhawan Palace">
-                                <div >
-                                    <h3>Umaid Bhawan Palace, Jodhpur</h3>
-                                    <p>Luxurious rooms & suites, some with balconies, plus complimentary breakfast & a serene spa.</p>
-                                </div>
-                             </div>
-                            <div class="slide">
-                                    <img src="http://blog.prefertrip.com/wp-content/uploads/2015/03/Girdikot-Sardar-Market.jpg" alt="Sardar Market">
-
-                                    <div>
-                                        <h3>Sardar Market, Jodhpur</h3>
-                                        <p>Bustling city marketplace with eateries, craft vendors, apparel & an iconic clock tower.</p>
-                                        </div>
-                            </div>
-                            <div class="slide">
-                                <img src="https://c1.staticflickr.com/9/8011/7513365946_ab6c1bf20b_b.jpg" alt="Ghanta Ghar">
-                                <div >
-                                    <h3>Ghanta Ghar Jodhpur</h3>
-                                    <p>Bustling city square known for its lively marketplace & soaring 19th-century clocktower.</p>
-                                </div>
-                            </div>
-                            <div class="slide">
-                             <img src="https://image3.mouthshut.com/images/imagesp/925752663s.jpg" alt="Jaswant Thada">
-                             <div>
-                                 <h3>Jaswant Thada, Jodhpur</h3>
-                                 <p>Elaborately carved white marble funerary monument built in 1899 to honor Maharaja Jaswant Singh II.</p>
-                             </div>
-                         </div>
-                         <div class="slide">
-                            <img  src="https://japan.cnet.com/storage/2016/05/19/785bb5d487086bfbb8befd3eb19ebcad/04.jpg" alt="Mehrangarh Fort">
-                            <div>
-                                <h3>Mehrangarh Fort ,Jodhpur</h3>
-                                <p>Built circa 1460, one of India's largest forts offers a lift & galleries, plus guided tours & shops.</p>
-                            </div>
-                        </div>
-                        </div>
-                        <!-- <a class="carousel-control-prev" href="#carouselExampleControls3" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls3" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
->>>>>>> 88b257dbdcdd85e53d8b220d797bbd1267b57a56
-                    </div>
-        </div>
-        <div class="slide">
-            <img src="https://c1.staticflickr.com/9/8011/7513365946_ab6c1bf20b_b.jpg" alt="Ghanta Ghar">
-            <div >
-                <h3>Ghanta Ghar Jodhpur</h3>
-                <p>Bustling city square known for its lively marketplace & soaring 19th-century clocktower.</p>
+         <div class="slide">
+            <img  src="https://japan.cnet.com/storage/2016/05/19/785bb5d487086bfbb8befd3eb19ebcad/04.jpg" alt="Mehrangarh Fort">
+            <div>
+                <h3>Mehrangarh Fort ,Jodhpur</h3>
+                <p>Built circa 1460, one of India's largest forts offers a lift & galleries, plus guided tours & shops.</p>
             </div>
         </div>
-        <div class="slide">
-         <img src="https://image3.mouthshut.com/images/imagesp/925752663s.jpg" alt="Jaswant Thada">
-         <div>
-             <h3>Jaswant Thada, Jodhpur</h3>
-             <p>Elaborately carved white marble funerary monument built in 1899 to honor Maharaja Jaswant Singh II.</p>
-         </div>
-     </div>
-     <div class="slide">
-        <img  src="https://japan.cnet.com/storage/2016/05/19/785bb5d487086bfbb8befd3eb19ebcad/04.jpg" alt="Mehrangarh Fort">
-        <div>
-            <h3>Mehrangarh Fort ,Jodhpur</h3>
-            <p>Built circa 1460, one of India's largest forts offers a lift & galleries, plus guided tours & shops.</p>
-        </div>
     </div>
-    </div>
-
+    
 <!-- Jodhpur End -->
 <!-- Ajmer Start -->
 <div class="section">
@@ -491,7 +354,6 @@
                         <h3>Ajmer Sharif Dargah, Ajmer</h3>
                         <p>Ajmer Sharif Dargah, Ajmer Dargah, Ajmer Sharif or Dargah Sharif is a sufi shrine of sufi saint, Moinuddin Chishti located at Ajmer, Rajasthan, India.</p>
                         </div>
-<<<<<<< HEAD
             </div>
             <div class="slide">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Amber_Fort_%28%E0%A4%86%E0%A4%AE%E0%A5%87%E0%A4%B0_%E0%A4%95%E0%A4%BE_%E0%A4%95%E0%A4%BF%E0%A4%B2%E0%A4%BE_%29.jpg/1200px-Amber_Fort_%28%E0%A4%86%E0%A4%AE%E0%A5%87%E0%A4%B0_%E0%A4%95%E0%A4%BE_%E0%A4%95%E0%A4%BF%E0%A4%B2%E0%A4%BE_%29.jpg" alt="Ajmer Fort">
@@ -508,27 +370,15 @@
              </div>
          </div>
         </div>
-=======
-                        <!-- <a class="carousel-control-prev" href="#carouselExampleControls4" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls4" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-</div>
-</div> -->
->>>>>>> 88b257dbdcdd85e53d8b220d797bbd1267b57a56
+
 
 <!-- Ajmer End -->
 
 <!-- Udaipur Start -->
 <div class="section">
-    <div class="slide">
-<<<<<<< HEAD
-            <img  src="https://myudaipurcity.com/wp-content/uploads/2017/02/Saheliyon-ki-Bari-Udaipur-2.jpg" alt="Saheliyon Ki Bari">
+ 
+        <div class="slide">
+              <img  src="https://myudaipurcity.com/wp-content/uploads/2017/02/Saheliyon-ki-Bari-Udaipur-2.jpg" alt="Saheliyon Ki Bari">
             <div >
                 <h3>Saheliyon Ki Bari, Udaipur</h3>
                 <p>Popular green space with landscaped grounds, marble elephants, fountains & a science museum.</p>
@@ -539,63 +389,6 @@
                 <div>
                     <h3>Monsoon Palace, Udaipur</h3>
                     <p>BHilltop white marble palace surrounded by a wildlife sanctuary & offering panoramic city views.</p>
-=======
-                <!-- <div id="carouselExampleControls5" class="carousel slide" data-ride="carousel" data-interval="100000">
-                    <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
-                </ol>
-                        <div class="carousel-inner">-->
-                            <!-- <div class="slide"> -->
-                                <img  src="https://myudaipurcity.com/wp-content/uploads/2017/02/Saheliyon-ki-Bari-Udaipur-2.jpg" alt="Saheliyon Ki Bari">
-                                <div >
-                                    <h3>Saheliyon Ki Bari, Udaipur</h3>
-                                    <p>Popular green space with landscaped grounds, marble elephants, fountains & a science museum.</p>
-                                </div>
-                             </div>
-                            <div class="slide">
-                                    <img class="d-block" src="https://www.trawell.in/admin/images/upload/307070550Udaipur_Sajjangarh_Main.jpg" alt="Monsoon Palace">
-                                    <div>
-                                        <h3>Monsoon Palace, Udaipur</h3>
-                                        <p>BHilltop white marble palace surrounded by a wildlife sanctuary & offering panoramic city views.</p>
-                                        </div>
-                            </div>
-                            <div class="slide">
-                                <img src="https://www.rajasthandirect.com/wp-content/uploads/2013/06/Jag-Mandir-Palace-Udaipur-1.jpg" alt="Jag Mandir">
-                                <div >
-                                    <h3>Jag Mandir Udaipur</h3>
-                                    <p>Upscale hotel in a 17th century island palace with stylish dining, lake views, a spa & a museum.</p>
-                                </div>
-                            </div>
-                            <div class="slide">
-                             <img src="https://www.makemytrip.com/travel-guide/media/dg_image/udaipur/Lake-Pichola.jpg" alt="Lake Pichola">
-                             <div>
-                                 <h3>Lake Pichola, Udaipur</h3>
-                                 <p>Lake Pichola, situated in Udaipur city in the Indian state of Rajasthan, is an artificial fresh water lake, created in the year 1362 AD, named after the nearby Picholi village.</p>
-                             </div>
-                         </div>
-                         <div class="slide">
-                            <img src="https://www.holidify.com/images/compressed/3137.jpg" alt="City Palace">
-                            <div>
-                                <h3>City Palace, Udaipur</h3>
-                                <p>The palaces of 11 separate rulers sit together in this sprawling complex that was started in 1559.</p>
-                            </div>
-                        </div>
-                        </div>
-                        <!-- <a class="carousel-control-prev" href="#carouselExampleControls5" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls5" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
->>>>>>> 88b257dbdcdd85e53d8b220d797bbd1267b57a56
                     </div>
         </div>
         <div class="slide">
@@ -620,10 +413,8 @@
         </div>
     </div>
     </div>
-
-<!--Udaipur End -->
+    <!-- Udaipur End -->
 </div>
-
     <div class ="iconclass"><a data-toggle="modal" data-target="#myModal" id="fixedbutton"><i class="fas fa-info-circle" id="icon"></i></a></div>
         <div class="box4">
             <!-- Modal -->
@@ -659,13 +450,12 @@
         var foot=document.getElementById('foot');
         var fixedbtn=document.getElementById('fixedbutton');
         planitibtn.onclick=function(){
-            var str=`<a class="btn btn-dark" href='/plan'>Plan Itinerary</a>`;
-            console.log(str);
+            var str=`<a class="btn btn-dark" id="plan1" href='/plan'>Plan Itinerary</a>`;
+
                 foot.innerHTML=str;
         };
         fixedbtn.onclick=function(){
-            var str=`<button type="button" class="btn btn-default" id="plan1" data-dismiss="modal">Close</button>`;
-            console.log(str);
+            var str=`<button type="button" class="btn btn-default"  data-dismiss="modal">Close</button>`;
             foot.innerHTML=str;
         };
         });
