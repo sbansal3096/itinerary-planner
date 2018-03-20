@@ -64,7 +64,7 @@ def grph(b,days,pref):
 	st=0
 	en=0
 	su=0
-	while 2*days-1<len(b):
+	while days<2*len(b)-1:
 		mini=pref[0]
 		minin=0
 		for i in range(len(pref)):
@@ -73,7 +73,10 @@ def grph(b,days,pref):
 				minin=i
 		del b[minin]
 		pref.remove(mini)
-
+	while 3*len(b)<days:
+		for i in range(5):
+			if i not in b:
+				b.append(i)
 	# for i in b:
 	# 	su+=vis_time[i]
 	# ma=sum
