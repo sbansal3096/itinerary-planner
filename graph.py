@@ -77,6 +77,7 @@ def grph(b,days,pref):
 		for i in range(5):
 			if i not in b:
 				b.append(i)
+				break
 	# for i in b:
 	# 	su+=vis_time[i]
 	# ma=sum

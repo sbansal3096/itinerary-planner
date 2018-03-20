@@ -123,30 +123,27 @@
                             var index = $('.fp-section.active').index();
                             var slideIndex = $('.fp-section.active').find('.slide.active').index();
                             $.getJSON('/background', {
-                                data: ''+(  index*10+slideIndex)
+                                data: ''+ (index*10+slideIndex)
                                 }, function(data) {
                         });
                     });
-                    console.log("yes")
+            });
+            $(function() {
+                    $('#fixedbutton').bind('click', function() {
+                            var index = $('.fp-section.active').index();
+                            var slideIndex = $('.fp-section.active').find('.slide.active').index();
+                            $.getJSON('/stopcam', {
+                                data: ''+ (index*10+slideIndex)
+                            }, function(data) {
+                        });
+                    });
             });
             $(function() {
                     $('#plan1').bind('click', function() {
-                            var activeSectionIndex = $('.fp-section.active').index();
-                            //var activeSlideIndex = $('.fp-section.active').find('.slide.active').index();
-                            if(activeSectionIndex==0){
-                            alert('sec3');
-                            }
-                            console.log('ay');
-                            console.log(activeSectionIndex);
-                            $.fn.fullpage.moveSectionUp();
-                        });
-                    });
-            $(function() {
-                    $('#plan2').bind('click', function() {
                             $.getJSON('/plan', {
                                     data: '2'
                                     }, function(data) {
-                            });
+                            });/*
                              $.ajax({
                                     type : "POST",
                                     url : '/plan',
@@ -155,10 +152,20 @@
                                     success: function(result) {
                                             console.log(result);
                                     }
-                               });
+                               });*/
                             });
                             //window.location="https://localhost:5000/plan"
                     });
+            $(function() {
+                $('#btn_close').bind('click', function() {
+                    console.log("yes");
+                    $.getJSON('/strtcam', {
+                                data: ''
+                            }, function(data) {
+                        });
+                    });
+                    //window.location="https://localhost:5000/plan"
+            });
     </script>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
@@ -445,7 +452,17 @@
         </div>
 
     <script>
+        
+        function startthread(){
+            console.log("yes");
+                    $.getJSON('/strtcam', {
+                                data: ''
+                            }, function(data) {
+                        });
+
+        }
     $(document).ready(function(){
+
         $('#wrapper').fullpage();
         var planitibtn=document.getElementById('plan');
         var foot=document.getElementById('foot');
@@ -456,10 +473,11 @@
                 foot.innerHTML=str;
         };
         fixedbtn.onclick=function(){
-            var str=`<button type="button" class="btn btn-default"  data-dismiss="modal">Close</button>`;
+            var str=`<button type="button" class="btn btn-default" onclick=startthread(this) data-dismiss="modal">Close</button>`;
             foot.innerHTML=str;
         };
-        });
+    });
+
     </script>
     </body>
     </html>

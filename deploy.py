@@ -55,6 +55,20 @@ def b():
         res=grph([0,1,2,3,4])
         return render_template("dir.html",fixedpts=res['fixedpts'],waypts=res['waypts'])
 
+@app.route('/stopcam',methods=['GET'])
+def c():
+    stop_thread()
+    print("please")
+    data = int(request.args.get('data'))
+    sec_no=int(data/10)
+    slide_no=data%10
+    change_active(sec_no,slide_no)
+    return jsonify({})
+
+@app.route('/strtcam',methods=['GET'])
+def d():
+    start_thread()
+    return jsonify({})
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
