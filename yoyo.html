@@ -65,15 +65,15 @@
         var text=inp.value;
 
         send.onclick=function(){
-          // for(var i=0;i<{{bot_number}};i++)
-          var cont=document.createElement('div');
+           for(var i=0;i<5;i++)
+          {var cont=document.createElement('div');
           cont.id="cont";
           var ele2=document.createElement('p');
           ele2.id="bot_inp";
-          var text2=document.createTextNode({{bot_string}});
+          var text2=document.createTextNode(inp.value);
           ele2.appendChild(text2);
           document.body.appendChild(ele2);
-          msgs.appendChild(ele2);
+          msgs.appendChild(ele2);}
           var ele=document.createElement('p');
           ele.id="user_inp";
           var text=document.createTextNode(inp.value);
@@ -84,10 +84,10 @@
           cont.appendChild(ele2);
           cont.appendChild(ele);
           msgs.appendChild(cont);
-                  $.getJSON('/sss', {
-                      data: inp.value;
-                      }, function(data) {
-              });
+              //     $.getJSON('/sss', {
+              //         data: inp.value;
+              //         }, function(data) {
+              // });
 
       };
     };
