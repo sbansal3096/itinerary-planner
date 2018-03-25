@@ -20,77 +20,85 @@
     <style>
 
     .disableScroll{
-    			overflow-y:hidden;
-    			overflow-x:hidden;
+                overflow-y:hidden;
+                overflow-x:hidden;
     }
     .chatbox,.type{
-    	width:350px;
-    	border:2px solid black;
-    	background-color: #d2d4d8;
+        width:350px;
+        border:2px solid black;
+        background-color: #d2d4d8;
       margin:0px;
     }
     #inp{
-    	width:280px;
-    	height:35px;
+        width:280px;
+        height:35px;
     }
     #user_inp{
-    	margin-top: 5px;
-    	margin-left:5px;
-    	width:120px;
-    	background-color:#e6eaf2;
-    	color:black;
-    	position: relative;
-    	float: right;
-    	border-radius: 10%;
-    	display:block;
-    	padding:10px;
+        margin-top: 5px;
+        margin-left:5px;
+        width:150px;
+        background-color:#e6eaf2;
+        color:black;
+        position: relative;
+        float: right;
+        border-radius: 10%;
+        display:block;
+        padding:10px;
     }
     #bot_inp{
-    	margin-top: 5px;
-    	margin-right:5px;
-    	width:120px;
-    	background-color: green;
-    	color:black;
-    	border-radius: 10%;
-    	display:block;
-    	background-color: #dee7f9;
-    	padding: 10px;
+        margin-top: 5px;
+        margin-right:5px;
+        width:150px;
+        background-color: green;
+        color:black;
+        border-radius: 10%;
+        display:block;
+        background-color: #dee7f9;
+        padding: 10px;
     }
     #cont{
-    	border-radius: 10%;
-    	margin:5px;
-    	min-height:50px;
+        border-radius: 10%;
+        margin:5px;
+        min-height:50px;
     }
     </style>
     </head>
     <body>
         <script type=text/javascript>
-            /*$(function(){
-                $('#wrapper').fullpage({
-                onLeave: function(index, nextIndex, direction){
-                        var leavingSection = $(this);
-                        var slideIndex=$('.fp-section.active').find('.slide.active').index();
-                        $.getJSON('/background', {
-                                data: ''+((index-1)*10+slideIndex)
-                                }, function(data) {
-                        });
-                    },
-                onSlideLeave: function( anchorLink, index, slideIndex, direction, nextSlideIndex){
-                    var leavingSlide = $(this);
-                    $.getJSON('/background', {
-                                data: ''+((index-1)*10+slideIndex)
-                                }, function(data) {
-                        });
-                    }
-                });
-            });*/
+          var scrolled=0;
             $(function() {
                     $('#plan').bind('click', function() {
                             var index = $('.fp-section.active').index();
                             var slideIndex = $('.fp-section.active').find('.slide.active').index();
-                            $.getJSON('/background', {
+                            $.getJSON('/planit', {
                                 data: ''+ (index*10+slideIndex)
                                 }, function(data) {
+
+                              var msgs=document.getElementById('msgs');
+                              var bn,bs;
+                              bn=data.bot_number;
+                              bs=data.bot_string;
+
+                               for(var i=0;i<bn;i++)
+                                {
+                                  var cont=document.createElement('div');
+                                  cont.id="cont";
+                                  var ele2=document.createElement('p');
+                                  ele2.id="bot_inp";
+                                  var text2=document.createTextNode(bs[i]);
+                                  ele2.appendChild(text2);
+                                  document.body.appendChild(ele2);
+                                  cont.appendChild(ele2);
+                                  document.body.appendChild(cont)
+                                  msgs.appendChild(cont);
+                                  // document.body.appendChild(cont);
+                                  // cont.appendChild(ele2);
+                                }
+                                scrolled=scrolled+500;
+
+                                $(".chatbox").animate({
+                                    scrollTop:  scrolled
+                                });
                         });
                     });
             });
@@ -109,21 +117,101 @@
                             $.getJSON('/plan', {
                                     data: '2'
                                     }, function(data) {
-                            });/*
-                             $.ajax({
-                                    type : "POST",
-                                    url : '/plan',
-                                    data: JSON.stringify({'val':3}),
-                                    contentType: 'application/json;charset=UTF-8',
-                                    success: function(result) {
-                                            console.log(result);
-                                    }
-                               });*/
+                            });
                             });
                             //window.location="https://localhost:5000/plan"
                     });
-    </script>
+  
+      $(function(){
 
+      var inp= document.getElementById('inp');
+      var send=document.getElementById('send_btn');
+      var msgs=document.getElementById('msgs');
+      // var bot=document.getElementById('bot');
+        var text=inp.value;
+        var bn,bs;
+        bn={{bot_number|safe}};
+        bs={{bot_string|safe}};
+
+
+
+         for(var i=0;i<bn;i++)
+          {
+            var cont=document.createElement('div');
+            cont.id="cont";
+            var ele2=document.createElement('p');
+            ele2.id="bot_inp";
+            var text2=document.createTextNode(bs[i]);
+            ele2.appendChild(text2);
+            document.body.appendChild(ele2);
+            cont.appendChild(ele2);
+            document.body.appendChild(cont)
+            msgs.appendChild(cont);
+            // document.body.appendChild(cont);
+            // cont.appendChild(ele2);
+          }
+
+        });
+      $(function(){
+
+        var bn,bs;
+        $("#inp").keyup(function(event) {
+              if (event.keyCode === 13) {
+                  $("#send_btn").click();
+              }
+          });
+        $('#send_btn').bind('click', function() {
+
+          var cont=document.createElement('div');
+          cont.id="cont";
+
+          var ele=document.createElement('p');
+          ele.id="user_inp";
+          var text=document.createTextNode(inp.value);
+          ele.appendChild(text);
+          document.body.appendChild(ele);
+          cont.appendChild(ele);
+          document.body.appendChild(cont);
+          msgs.appendChild(cont);
+            scrolled=scrolled+500;
+
+            $(".chatbox").animate({
+                scrollTop:  scrolled
+            });
+
+
+          $.getJSON('/sss', {
+                      data: inp.value
+                      }, function(data) {
+                        bn=data.bot_number;
+                        bs=data.bot_string;
+                        console.log(bn);
+                        for(var i=0;i<bn;i++)
+                        {
+                          var cont=document.createElement('div');
+                          cont.id="cont";
+                          var ele2=document.createElement('p');
+                          ele2.id="bot_inp";
+                          var text2=document.createTextNode(bs[i]);
+                          ele2.appendChild(text2);
+                          document.body.appendChild(ele2);
+                          cont.appendChild(ele2);
+                          document.body.appendChild(cont);
+                          msgs.appendChild(cont);
+
+                        }
+                          scrolled=scrolled+500;
+
+                          $(".chatbox").animate({
+                              scrollTop:  scrolled
+                          });
+          });
+          inp.value="";
+
+      });
+
+    });
+    </script>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
             <a class="navbar-brand" href="#">Rajasthan</a>
 
@@ -132,22 +220,8 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
 
-                    <li class="nav-item dropdown">
-             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             About Rajasthan
-             </a>
-                  </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#TechnicalProjects">Places</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#Honours&Awards">Cuisine</a>
-                    </li>
-                                </ul>
-                 <ul class="navbar-nav navbar-right">
+                 <ul class="navbar-nav navbar-right mr-auto">
                      <li class="nav-item">
                          <!-- Trigger the modal with a button -->
                             <button class="btn btn-dark"  id="plan" data-toggle="modal" data-target="#myModal">Plan Trip</button>
@@ -444,98 +518,6 @@
     });
 
     </script>
-    <script>
-
-      $(function(){
-
-      var inp= document.getElementById('inp');
-      var send=document.getElementById('send_btn');
-      var msgs=document.getElementById('msgs');
-      // var bot=document.getElementById('bot');
-        var text=inp.value;
-        var bn,bs;
-        bn={{bot_number|safe}};
-        bs={{bot_string|safe}};
-
-
-
-         for(var i=0;i<bn;i++)
-          {
-            var cont=document.createElement('div');
-            cont.id="cont";
-            var ele2=document.createElement('p');
-            ele2.id="bot_inp";
-            var text2=document.createTextNode(bs[i]);
-            ele2.appendChild(text2);
-            document.body.appendChild(ele2);
-            cont.appendChild(ele2);
-            document.body.appendChild(cont)
-            msgs.appendChild(cont);
-            // document.body.appendChild(cont);
-            // cont.appendChild(ele2);
-          }
-
-        });
-      $(function(){
-
-        var bn,bs;
-        $("#inp").keyup(function(event) {
-              if (event.keyCode === 13) {
-                  $("#send_btn").click();
-              }
-          });
-        $('#send_btn').bind('click', function() {
-
-          var cont=document.createElement('div');
-          cont.id="cont";
-
-          var ele=document.createElement('p');
-          ele.id="user_inp";
-          var text=document.createTextNode(inp.value);
-          ele.appendChild(text);
-          document.body.appendChild(ele);
-          cont.appendChild(ele);
-          document.body.appendChild(cont);
-          msgs.appendChild(cont);
-          var scrolled=0;
-            scrolled=scrolled+500;
-
-            $(".chatbox").animate({
-                scrollTop:  scrolled
-            });
-
-
-          $.getJSON('/sss', {
-                      data: inp.value
-                      }, function(data) {
-                        bn=data.bot_number;
-                        bs=data.bot_string;
-                        console.log(bn);
-                        for(var i=0;i<bn;i++)
-                        {
-                          var cont=document.createElement('div');
-                          cont.id="cont";
-                          var ele2=document.createElement('p');
-                          ele2.id="bot_inp";
-                          var text2=document.createTextNode(bs[i]);
-                          ele2.appendChild(text2);
-                          document.body.appendChild(ele2);
-                          cont.appendChild(ele2);
-                          document.body.appendChild(cont);
-                          msgs.appendChild(cont);
-
-                        }
-                        var scrolled=0;
-                          scrolled=scrolled+500;
-
-                          $(".chatbox").animate({
-                              scrollTop:  scrolled
-                          });
-          });
-
-      });
-
-    });
-    </script>
+    
     </body>
     </html>
